@@ -12,6 +12,10 @@ This project is a slot machine game built using React, with additional functiona
 - **Funny Loser Messages**: A random message is displayed if the user loses.
 - **Lever Interaction**: A custom-built lever to trigger the spin action.
 
+## Live Demo
+
+Explore at the [demo](https://reel-seven.vercel.app/).
+
 ## Technologies Used
 
 - **React**: For the frontend of the application.
