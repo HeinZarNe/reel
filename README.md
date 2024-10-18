@@ -47,6 +47,18 @@ This project is a slot machine game built using React, with additional functiona
 
 This is the main component that manages the game state, including the current slot values, winning condition checks, and animations.
 
+```javascript
+import { useRef, useState } from "react";
+import SlotReel from "./components/SlotReel";
+import Lever from "./components/Lever";
+import { useWindowSize } from "react-use";
+import Confetti from "react-confetti";
+import SlotMatrix from "./components/SlotMatrix";
+import { loserMessages, dummyCharacters, paylines, reels } from "./constants";
+
+// Game logic and UI rendering
+```
+
 #### Key Logic:
 
 - **getRandomSlot()**: Generates random slot symbols from predefined reels.
@@ -57,13 +69,80 @@ This is the main component that manages the game state, including the current sl
 
 This component is a ready-made lever design, allowing users to spin the slot machine by interacting with it.
 
+```javascript
+import React, { useEffect, useState } from "react";
+
+const Lever = ({ onClick, isSpinning }) => {
+  const [isToggled, setIsToggled] = useState(false);
+
+  useEffect(() => {
+    if (isSpinning) setIsToggled(true);
+    else setIsToggled(false);
+  }, [isSpinning]);
+
+  return (
+    <div className="toggle-container">
+      <input
+        className="toggle-input"
+        type="checkbox"
+        onClick={onClick}
+        disabled={isSpinning}
+        checked={isToggled}
+        readOnly
+      />
+      {/* Lever UI */}
+    </div>
+  );
+};
+export default Lever;
+```
+
 ### `SlotMatrix.jsx`
 
 This component renders the slot reel's matrix and highlights winning paylines.
 
+```javascript
+export default function SlotMatrix({ wonPaylines }) {
+  const renderSlotRow = (rowIndex) => {
+    return (
+      <div className="flex flex-row gap-0" key={rowIndex}>
+        {/* Slots in each row */}
+      </div>
+    );
+  };
+
+  return (
+    <div className="absolute top-[-2px] left-0 w-full h-full flex flex-col">
+      {/* Render each row of slots */}
+    </div>
+  );
+}
+```
+
 ### `SlotReel.jsx`
 
 This component uses `react-slot-counter` to animate the symbols on the slot reel.
+
+```javascript
+import React, { forwardRef } from "react";
+import SlotCounter from "react-slot-counter";
+
+const SlotReel = forwardRef(({ value, dummyCharacters }, ref) => (
+  <SlotCounter
+    ref={ref}
+    separatorClassName="border border-black"
+    autoAnimationStart={false}
+    direction="top-down"
+    containerClassName="text-6xl leading-[114px] mt-[-13px]"
+    charClassName="w-[81px]"
+    dummyCharacters={dummyCharacters}
+    duration={3}
+    value={value}
+  />
+));
+
+export default SlotReel;
+```
 
 ### `constants.js`
 
@@ -88,6 +167,24 @@ export const paylines = [
   [5, 6, 7, 8, 9],
   // More paylines...
 ];
+```
+
+### `index.css`
+
+This file includes custom styles and lever animations, utilizing Tailwind CSS.
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom lever styles */
+.toggle-container {
+  --knob-size: 1.75em;
+  /* Lever style properties */
+}
+
+/* More custom styles */
 ```
 
 ## How It Works
